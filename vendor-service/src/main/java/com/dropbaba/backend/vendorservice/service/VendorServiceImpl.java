@@ -1,7 +1,10 @@
 package com.dropbaba.backend.vendorservice.service;
 
+import com.dropbaba.backend.vendorservice.event.VendorCreatedEvent;
+import com.dropbaba.backend.vendorservice.messaging.VendorEventPublisher;
 import com.dropbaba.backend.vendorservice.model.Vendor;
 import com.dropbaba.backend.vendorservice.repository.VendorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,15 +14,27 @@ import java.util.Optional;
 public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository vendorRepository;
+    private final VendorEventPublisher vendorEventPublisher;
 
-    public VendorServiceImpl(VendorRepository vendorRepository) {
+    public VendorServiceImpl(VendorRepository vendorRepository, VendorEventPublisher vendorEventPublisher) {
         this.vendorRepository = vendorRepository;
+        this.vendorEventPublisher = vendorEventPublisher;
     }
 
     @Override
     public Vendor createVendor(Vendor vendor) {
         vendor.setActive(true);
-        return vendorRepository.save(vendor);
+        Vendor saved = vendorRepository.save(vendor);
+
+        VendorCreatedEvent event = VendorCreatedEvent.builder()
+                .id(saved.getId())
+                .name(saved.getName())
+                .email(saved.getEmail())
+                .city(saved.getCity())
+                .build();
+
+        vendorEventPublisher.publishVendorCreatedEvent(event);
+        return saved;
     }
 
     @Override

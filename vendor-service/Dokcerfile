@@ -1,0 +1,14 @@
+# Use Eclipse Temurin base image for Java 21
+FROM eclipse-temurin:21-jdk-alpine
+
+# Set app directory
+WORKDIR /app
+
+# Copy build output (adjust path if using different structure)
+COPY build/libs/vendor-service-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose port (matches server.port)
+EXPOSE 8082
+
+# Run the service
+ENTRYPOINT ["java", "-jar", "app.jar"]
