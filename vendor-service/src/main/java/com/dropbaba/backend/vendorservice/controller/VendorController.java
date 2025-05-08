@@ -34,7 +34,7 @@ public class VendorController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping(params = "country")
     public ResponseEntity<List<Vendor>> getActiveVendorsByCity(@RequestParam String city) {
         return ResponseEntity.ok(vendorService.getActiveVendorsByCity(city));
     }
