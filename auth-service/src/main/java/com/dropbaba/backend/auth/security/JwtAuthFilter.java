@@ -25,7 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         // TODO: token extraction, validation, and authentication logic
-        // If you haven't implemented it yet, you can skip to filterChain.doFilter for now
+
 
         filterChain.doFilter(request, response);
     }
