@@ -28,3 +28,10 @@ eureka:
 jwt:
   secret: aVeryStrongSecretKeyThatIsAtLeast256BitsLongForHS256
   expiration: 86400000
+
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+
