@@ -15,7 +15,7 @@ public class VendorNotificationListener {
         this.notificationService = notificationService;
     }
 
-    @RabbitListener(queues = "vendorQueue")
+    @RabbitListener(queues = "vendor.created.queue")
     public void handleVendorCreatedEvent(VendorCreatedEvent event) {
         Notification notification = new Notification();
         notification.setTitle("Welcome " + event.getName() + "!");
