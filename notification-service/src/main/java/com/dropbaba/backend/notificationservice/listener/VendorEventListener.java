@@ -6,6 +6,7 @@ import com.dropbaba.backend.notificationservice.service.NotificationService;
 import com.dropbaba.backend.notificationservice.websocket.NotificationBroadcaster;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+
 @Component
 public class VendorEventListener {
 
@@ -16,6 +17,7 @@ public class VendorEventListener {
         this.notificationService = notificationService;
         this.broadcaster = broadcaster;
     }
+
 
     @RabbitListener(queues = "vendor.created.queue")
     public void handleVendorCreated(VendorCreatedEvent event) {

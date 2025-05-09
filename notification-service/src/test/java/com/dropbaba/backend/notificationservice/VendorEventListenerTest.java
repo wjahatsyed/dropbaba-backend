@@ -4,6 +4,7 @@ import com.dropbaba.backend.notificationservice.event.VendorCreatedEvent;
 import com.dropbaba.backend.notificationservice.listener.VendorEventListener;
 import com.dropbaba.backend.notificationservice.model.Notification;
 import com.dropbaba.backend.notificationservice.service.NotificationService;
+import com.dropbaba.backend.notificationservice.websocket.NotificationBroadcaster;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,7 +20,8 @@ class VendorEventListenerTest {
     @BeforeEach
     void setUp() {
         notificationService = mock(NotificationService.class);
-        listener = new VendorEventListener(notificationService);
+        NotificationBroadcaster notificationBroadcaster = mock(NotificationBroadcaster.class);
+        listener = new VendorEventListener(notificationService, notificationBroadcaster);
     }
 
     @Test
