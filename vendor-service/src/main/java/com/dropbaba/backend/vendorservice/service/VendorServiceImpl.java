@@ -44,8 +44,9 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Optional<Vendor> getVendor(Long id) {
-        return vendorRepository.findById(id);
+    public Vendor getVendorById(Long id) {
+        return vendorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vendor not found"));
     }
 
     @Override
@@ -57,4 +58,5 @@ public class VendorServiceImpl implements VendorService {
     public List<Vendor> getActiveVendorsByCountry(String country) {
         return vendorRepository.findByCountryAndActive(country, true);
     }
+
 }

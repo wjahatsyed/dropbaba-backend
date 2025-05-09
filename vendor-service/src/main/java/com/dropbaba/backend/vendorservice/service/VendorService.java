@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface VendorService {
     Vendor createVendor(Vendor vendor);
     Vendor updateVendor(Long id, Vendor vendor);
-    Optional<Vendor> getVendor(Long id);
+    Vendor getVendorById(Long id);
     List<Vendor> getActiveVendorsByCity(String city);
     List<Vendor> getActiveVendorsByCountry(String country);
 }

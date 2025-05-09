@@ -51,9 +51,9 @@ class VendorServiceImplTest {
                 "Pakistan", true);
         when(vendorRepository.findById(1L)).thenReturn(Optional.of(vendor));
 
-        Optional<Vendor> result = vendorService.getVendor(1L);
+        Vendor result = vendorService.getVendorById(1L);
 
-        assertThat(result).isPresent();
-        assertThat(result.get().getCity()).isEqualTo("Karachi");
+        assertThat(result);
+        assertThat(result.getCity()).isEqualTo("Karachi");
     }
 }

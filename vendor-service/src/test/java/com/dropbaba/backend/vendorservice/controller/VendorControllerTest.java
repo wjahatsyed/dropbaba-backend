@@ -17,6 +17,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 
 @WebMvcTest(VendorController.class)
 @Import(VendorControllerTest.MockedServiceConfig.class)  // import the manual mock config
@@ -56,7 +58,17 @@ public class VendorControllerTest {
                 .andExpect(jsonPath("$.email").value("contact@wajahatfoods.pk"));
     }
 
-    // ✅ Manual mock configuration
+    @Test
+    void shouldReturnVendorById() throws Exception {
+        when(vendorService.getVendorById(1L)).thenReturn(vendor);
+
+        mockMvc.perform(get("/api/vendors/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Wajahat Foods"))
+                .andExpect(jsonPath("$.email").value("contact@wajahatfoods.pk"));
+    }
+
     @TestConfiguration
     static class MockedServiceConfig {
         @Bean

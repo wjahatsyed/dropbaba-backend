@@ -2,8 +2,10 @@ package com.dropbaba.backend.vendorservice.controller;
 
 import com.dropbaba.backend.vendorservice.model.Vendor;
 import com.dropbaba.backend.vendorservice.service.VendorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,10 +30,9 @@ public class VendorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Vendor> getVendor(@PathVariable Long id) {
-        return vendorService.getVendor(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Vendor> getVendorById(@PathVariable Long id) {
+        Vendor vendor = vendorService.getVendorById(id);
+        return ResponseEntity.ok(vendor);
     }
 
     @GetMapping(params = "country")
@@ -43,4 +44,6 @@ public class VendorController {
     public ResponseEntity<List<Vendor>> getActiveVendorsByCountry(@RequestParam String country) {
         return ResponseEntity.ok(vendorService.getActiveVendorsByCountry(country));
     }
+
+
 }
