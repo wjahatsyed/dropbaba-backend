@@ -15,6 +15,14 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  spring:
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+
+
 eureka:
   client:
     register-with-eureka: true

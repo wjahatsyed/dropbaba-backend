@@ -6,7 +6,7 @@ spring:
     name: vendor-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/vendor_db
+    url: jdbc:postgresql://localhost:5432/dropbaba_vendors
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
