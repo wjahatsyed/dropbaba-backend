@@ -1,6 +1,7 @@
 package com.dropbaba.backend.orderservice.service.impl;
 
 import com.dropbaba.backend.orderservice.dto.OrderRequest;
+import com.dropbaba.backend.orderservice.messaging.OrderEventPublisher;
 import com.dropbaba.backend.orderservice.model.Order;
 import com.dropbaba.backend.orderservice.model.OrderItem;
 import com.dropbaba.backend.orderservice.model.OrderStatus;
@@ -16,9 +17,11 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderEventPublisher orderEventPublisher;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderEventPublisher orderEventPublisher) {
         this.orderRepository = orderRepository;
+        this.orderEventPublisher = orderEventPublisher;
     }
 
     @Override
@@ -45,7 +48,11 @@ public class OrderServiceImpl implements OrderService {
         order.setItems(items);
         order.setTotalAmount(total);
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        orderEventPublisher.publishOrderPlaced(savedOrder);
+
+        return savedOrder;
     }
 
     @Override

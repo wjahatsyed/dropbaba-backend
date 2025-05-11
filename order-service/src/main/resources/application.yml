@@ -33,3 +33,8 @@ eureka:
   instance:
     prefer-ip-address: true
 
+
+rabbitmq:
+  vendor:
+    exchange: vendor.topic.exchange
+    routing-key: order.placed

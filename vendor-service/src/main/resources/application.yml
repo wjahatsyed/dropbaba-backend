@@ -40,3 +40,8 @@ rabbitmq:
     routing-key: vendor.created
     queue: vendor.created.queue
 
+  order-placed:
+    exchange: vendor.topic.exchange
+    routing-key: order.placed
+    queue: order.placed.vendor.queue
+

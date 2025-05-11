@@ -1,6 +1,7 @@
 package com.dropbaba.backend.orderservice.service.impl;
 
 import com.dropbaba.backend.orderservice.dto.OrderRequest;
+import com.dropbaba.backend.orderservice.messaging.OrderEventPublisher;
 import com.dropbaba.backend.orderservice.model.Order;
 import com.dropbaba.backend.orderservice.model.OrderStatus;
 import com.dropbaba.backend.orderservice.repository.OrderRepository;
@@ -16,12 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderServiceImplTest {
 
     private OrderRepository orderRepository;
+    private OrderEventPublisher orderEventPublisher;
     private OrderServiceImpl orderService;
 
     @BeforeEach
     void setUp() {
         orderRepository = mock(OrderRepository.class);
-        orderService = new OrderServiceImpl(orderRepository);
+        orderEventPublisher = mock(OrderEventPublisher.class);
+        orderService = new OrderServiceImpl(orderRepository, orderEventPublisher);
     }
 
     @Test
@@ -55,6 +58,7 @@ class OrderServiceImplTest {
         assertEquals(2L, result.getVendorId());
         assertEquals(new BigDecimal("600"), result.getTotalAmount());
         verify(orderRepository, times(1)).save(any(Order.class));
+        verify(orderEventPublisher, times(1)).publishOrderPlaced(savedOrder);
     }
 
     @Test
