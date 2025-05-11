@@ -2,12 +2,16 @@ package com.dropbaba.backend.vendorservice.messaging;
 
 import com.dropbaba.backend.vendorservice.event.OrderPlacedEvent;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderPlacedListener {
 
-    @RabbitListener(queues = "${rabbitmq.vendor.queue}")
+    @Value("${rabbitmq.order-placed.queue}")
+    private String orderPlacedQueue;
+
+    @RabbitListener(queues = "${rabbitmq.order-placed.queue}")
     public void handleOrderPlaced(OrderPlacedEvent event) {
         System.out.println("Received OrderPlacedEvent in vendor-service:");
         System.out.println("Order ID: " + event.getOrderId());
