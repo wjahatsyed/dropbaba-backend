@@ -7,6 +7,8 @@ import com.dropbaba.backend.orderservice.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
@@ -28,6 +30,12 @@ public class OrderController {
         Order order = orderService.getOrderById(id);
         return ResponseEntity.ok(order);
     }
+
+    @GetMapping("/vendor/{vendorId}")
+    public ResponseEntity<List<Order>> getOrdersByVendor(@PathVariable Long vendorId) {
+        return ResponseEntity.ok(orderService.getOrdersByVendor(vendorId));
+    }
+
 
     @PutMapping("/{id}/status")
     public ResponseEntity<Order> updateOrderStatus(
