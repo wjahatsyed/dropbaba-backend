@@ -43,3 +43,9 @@ management:
   endpoint:
     health:
       show-details: always
+
+  routes:
+    - id: delivery-service
+      uri: lb://delivery-service
+      predicates:
+        - Path=/api/deliveries/**
