@@ -25,7 +25,6 @@ public class UserEventListener {
         }
 
         User user = new User();
-        user.setId(event.getUserId()); // use same ID
         user.setFullName(event.getName());
         user.setEmail(event.getEmail());
 
