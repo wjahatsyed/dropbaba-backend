@@ -19,7 +19,10 @@ public class Delivery {
     private String orderId;
     private String vendorId;
     private String userId;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status;
     private LocalDateTime timestamp;
 
 }
+
+

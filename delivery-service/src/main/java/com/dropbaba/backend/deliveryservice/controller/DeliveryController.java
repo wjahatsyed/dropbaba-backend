@@ -1,6 +1,7 @@
 package com.dropbaba.backend.deliveryservice.controller;
 
 import com.dropbaba.backend.deliveryservice.model.Delivery;
+import com.dropbaba.backend.deliveryservice.model.DeliveryStatus;
 import com.dropbaba.backend.deliveryservice.service.DeliveryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,4 +20,14 @@ public class DeliveryController {
     public ResponseEntity<Delivery> getDeliveryByOrderId(@PathVariable String orderId) {
         return ResponseEntity.ok(deliveryService.getDeliveryByOrderId(orderId));
     }
+
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<Void> updateStatus(
+            @PathVariable String orderId,
+            @RequestParam DeliveryStatus status) {
+
+        deliveryService.updateStatus(orderId, status);
+        return ResponseEntity.ok().build();
+    }
+
 }
