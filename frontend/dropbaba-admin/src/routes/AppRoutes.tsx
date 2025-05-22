@@ -1,15 +1,26 @@
 import { Routes, Route } from "react-router-dom";
-import AdminLayout from "../layouts/AdminLayout.tsx";
 import Dashboard from "../pages/Dashboard";
 import Orders from "../pages/Orders";
+import Login from "../pages/Login";
+import AdminLayout from "../layouts/AdminLayout";
+import ProtectedRoute from "./ProtectedRoute";
 
-const AppRoutes = () => (
-  <Routes>
-    <Route element={<AdminLayout />}>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/orders" element={<Orders />} />
-    </Route>
-  </Routes>
-);
+const AppRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route
+        element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/orders" element={<Orders />} />
+      </Route>
+    </Routes>
+  );
+};
 
 export default AppRoutes;
