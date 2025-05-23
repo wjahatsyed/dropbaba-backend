@@ -34,6 +34,10 @@ rabbitmq:
   order:
     ready:
       queue: order.ready.queue
+  delivery:
+    status:
+      exchange: delivery.status.exchange
+      routing-key: delivery.status.changed
 
 management:
   endpoints:

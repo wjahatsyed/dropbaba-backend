@@ -1,7 +1,9 @@
 package com.dropbaba.backend.deliveryservice.service;
 
 import com.dropbaba.backend.deliveryservice.event.OrderReadyForDeliveryEvent;
+import com.dropbaba.backend.deliveryservice.messaging.DeliveryEventPublisher;
 import com.dropbaba.backend.deliveryservice.model.Delivery;
+import com.dropbaba.backend.deliveryservice.model.DeliveryStatus;
 import com.dropbaba.backend.deliveryservice.repository.DeliveryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +19,12 @@ class DeliveryServiceTest {
 
     private DeliveryRepository repository;
     private DeliveryService service;
+    private DeliveryEventPublisher deliveryEventPublisher;
 
     @BeforeEach
     void setUp() {
         repository = mock(DeliveryRepository.class);
-        service = new DeliveryService(repository);
+        service = new DeliveryService(repository, deliveryEventPublisher);
     }
 
     @Test
@@ -40,7 +43,7 @@ class DeliveryServiceTest {
         assertEquals("order123", saved.getOrderId());
         assertEquals("vendorABC", saved.getVendorId());
         assertEquals("userXYZ", saved.getUserId());
-        assertEquals("READY", saved.getStatus());
+        assertEquals(DeliveryStatus.READY, saved.getStatus());
         assertNotNull(saved.getTimestamp());
     }
 
