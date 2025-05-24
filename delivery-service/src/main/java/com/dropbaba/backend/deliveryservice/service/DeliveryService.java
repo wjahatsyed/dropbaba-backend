@@ -53,6 +53,15 @@ public class DeliveryService {
         delivery.setStatus(newStatus);
         delivery.setTimestamp(LocalDateTime.now());
         repository.save(delivery);
+
+        DeliveryStatusChangedEvent deliveryStatusChangedEvent = new DeliveryStatusChangedEvent(
+                delivery.getOrderId(),
+                delivery.getUserId(),
+                delivery.getVendorId(),
+                newStatus,
+                "Your order is now " + newStatus
+        );
+        eventPublisher.publishDeliveryStatusChangedEvent(deliveryStatusChangedEvent);
     }
 
 }

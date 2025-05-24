@@ -19,12 +19,13 @@ class DeliveryServiceTest {
 
     private DeliveryRepository repository;
     private DeliveryService service;
-    private DeliveryEventPublisher deliveryEventPublisher;
 
     @BeforeEach
     void setUp() {
         repository = mock(DeliveryRepository.class);
+        DeliveryEventPublisher deliveryEventPublisher = mock(DeliveryEventPublisher.class);
         service = new DeliveryService(repository, deliveryEventPublisher);
+
     }
 
     @Test

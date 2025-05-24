@@ -35,3 +35,7 @@ rabbitmq:
     exchange: vendor.exchange
     routing-key: vendor.created
     queue: vendor.created.queue
+
+  delivery:
+    status:
+      queue: delivery.status.changed.queue

@@ -35,6 +35,18 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public Queue deliveryStatusChangedQueue() {
+        return new Queue("delivery.status.changed.queue", true);
+    }
+
+    @Bean
+    public Binding deliveryStatusBinding() {
+        return BindingBuilder.bind(deliveryStatusChangedQueue())
+                .to(new TopicExchange("delivery.status.exchange"))
+                .with("delivery.status.changed");
+    }
+
+    @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
